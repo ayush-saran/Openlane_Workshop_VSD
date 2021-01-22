@@ -51,6 +51,7 @@ The command to do this is : prep -design <design_name>
 This serves another important purpose, which is to merge the cell LEF and technology LEF information.
 
 1.The cell LEF works towards providing the user with information about the standard cells, it's area, i/p-o/p terminals, different layers etc.
+
 2.The Tech LEF files contains layer definitons and a set of restricted design rules
 
 During this preparation stage of OpenLANE, the two LEF files are combined and are collectively termed as merge.LEF
