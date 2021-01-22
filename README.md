@@ -9,11 +9,11 @@ Day 1 kickstarted off with educating us about "chips". Most of us have played ar
 Macros, IPs, RISC-V and the software-to-hardware piepline were some of the topics hit upon.
 
 $PDK_ROOT is the parent root directory under which we will find the Skywater PDK files that have been used. Access to 3 main sub-directories, namely, sky130A, skywater-pdk and open_pdks have been provided.
-![](Images/day1.8.png)
+![](Images/day1.8.PNG)
 
-Skywater-pdk – Contains all the foundry provided PDK related files
-Open_pdks – Contains scripts that are used to bridge the gap between closed-source and open-source PDK to EDA tool compatibility
-Sky130A – The open-source compatible PDK files
+1. Skywater-pdk – Contains all the foundry provided PDK related files
+2. Open_pdks – Contains scripts that are used to bridge the gap between closed-source and open-source PDK to EDA tool compatibility
+3. Sky130A – The open-source compatible PDK files
 
 ### Calling upon OpenLANE ###
 
