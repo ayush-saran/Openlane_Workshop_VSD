@@ -19,8 +19,20 @@ $PDK_ROOT is the parent root directory under which we will find the Skywater PDK
 ### Calling upon OpenLANE ###
 
 The command used to run the OpenLANE flow is ./flow.tcl 
+
 This command is explicitly run in the docker, which should be installed along with the OpenLANE tools, pdks and other files. 
+
 To run OpenLANE interactively, ./flow.tcl -interactive does the trick.
+
 Furthermore, OpenLANE requires different software dependencies to run it, which is provided to it by running the command - package require openalane 0.9
 
 ![](Images/day1.1.PNG)
+
+The Designs being run through OpenLANE flow are enlisted below, under the directory openlane/designs
+
+![](Images/day1.5.PNG)
+
+For the duration of this workshop, and for this repository, we will be focussing on the "picorv32a" design.
+The design heirarchy for picorv32a is listed below
+
+![](Images/day1.6.PNG)
