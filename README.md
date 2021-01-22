@@ -4,4 +4,9 @@ This repository will reflect the work done in the Advanced Physical Design Flow 
 
 # Day 1 - An Introduction to OpenLANE
 
-Day 1 kick
+Day 1 kickstarted off with educating us about "chips". Most of us have played around with an Arduino, as electronics enthusiasts and hobbyists, but we've only toyed around with the functionalities of the Arudino, not the brain of the processor itself. The very first lecture of this workshop opened our eyes to what exactly lies in front of us if we choose to this "VLSI" career road, a road that in recent times has been travelled by many. 
+
+Macros, IPs, RISC-V and the software-to-hardware piepline were some of the topics hit upon.
+
+$PDK_ROOT is the parent root directory under which we will find the Skywater PDK files that have been used.
+
