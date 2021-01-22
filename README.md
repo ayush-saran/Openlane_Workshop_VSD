@@ -28,7 +28,7 @@ Furthermore, OpenLANE requires different software dependencies to run it, which 
 
 ![](Images/day1.1.PNG)
 
-The Designs being run through OpenLANE flow are enlisted below, under the directory openlane/designs
+The Designs being run through OpenLANE flow are enlisted below, under the directory openLANE_flow/designs
 
 ![](Images/day1.5.PNG)
 
@@ -36,3 +36,33 @@ For the duration of this workshop, and for this repository, we will be focussing
 The design heirarchy for picorv32a is listed below
 
 ![](Images/day1.6.PNG)
+
+1. The "src" folder contains verilog and sdc files
+2. The "config.tcl" file is responsible for containing the various design specific configuration switches and parameters as used by the OpenLANE flow tools.
+
+### Preparing the Design ###
+
+The Keyword "prep" is used for preparing the design so that it's ready to be used effectively by the OpenLANE tools.
+
+The command to do this is : prep -design <design_name> 
+  
+  In our case, design_name = picorv32a
+  
+This serves another important purpose, which is to merge the cell LEF and technology LEF information.
+
+1.The cell LEF works towards providing the user with information about the standard cells, it's area, i/p-o/p terminals, different layers etc.
+2.The Tech LEF files contains layer definitons and a set of restricted design rules
+
+During this preparation stage of OpenLANE, the two LEF files are combined and are collectively termed as merge.LEF
+
+![](Images/day1.2.PNG)
+
+### Running Synthesis ###
+
+OpenLANE provides a very simple way to run the synthesis of the design file, (here picorv32a.v), interactively.
+
+The command to do so is run_synthesis, which takes about 2-4 minutes to run.
+
+![](Images/day1.3.PNG)
+
+![](Images/day1.4.PNG)
