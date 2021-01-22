@@ -9,6 +9,7 @@ Day 1 kickstarted off with educating us about "chips". Most of us have played ar
 Macros, IPs, RISC-V and the software-to-hardware piepline were some of the topics hit upon.
 
 $PDK_ROOT is the parent root directory under which we will find the Skywater PDK files that have been used. Access to 3 main sub-directories, namely, sky130A, skywater-pdk and open_pdks have been provided.
+
 ![](Images/day1.8.PNG)
 
 1. Skywater-pdk – Contains all the foundry provided PDK related files
@@ -17,3 +18,9 @@ $PDK_ROOT is the parent root directory under which we will find the Skywater PDK
 
 ### Calling upon OpenLANE ###
 
+The command used to run the OpenLANE flow is ./flow.tcl 
+This command is explicitly run in the docker, which should be installed along with the OpenLANE tools, pdks and other files. 
+To run OpenLANE interactively, ./flow.tcl -interactive does the trick.
+Furthermore, OpenLANE requires different software dependencies to run it, which is provided to it by running the command - package require openalane 0.9
+
+![](Images/day1.1.PNG)
