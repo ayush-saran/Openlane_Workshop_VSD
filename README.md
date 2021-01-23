@@ -91,3 +91,13 @@ The command to do so is `%run_synthesis`, which takes about 2-4 minutes to run.
 Here's a sneak peek into what your synthesis file picorv32a.synthesis.v (present in the designs/picorv32a/runs/<date_of_run>/results/synthesis folder) should look like
 
 ![](Images/day1.9.PNG)
+
+# Day 2 - Understanding Floorplanning and Standard Cells
+
+The session started off with helping us understand the significance and application of the keywords _tag_ and _overwrite_
+
+_tag_ is responsible for providing a convenient user defined name to the run we'll be executing. In my case, I've chosen to name the run "workshop" for the entire duration of the workshop.
+
+This is implemented while preparing the design by executing this command :- `prep -design <design_name> -tag <tag_name> `
+
+Here, design_name = picorv32a & tag_name = workshop
