@@ -173,6 +173,8 @@ The end result provides the Evaluation and Legality checks -
 
 ![](Images/day2.5.PNG)
 
+### Viewiwng Placement on Magic ###
+
 We now wish to view the results of the placement done on Magic. 
 
 The command to do so is similar to the one we used to view our floorplan, with a few changes.
