@@ -94,6 +94,8 @@ Here's a sneak peek into what your synthesis file picorv32a.synthesis.v (present
 
 # Day 2 - Understanding Floorplanning and Standard Cells
 
+### Additional Data Set-up features ###
+
 The session started off with helping us understand the significance and application of the keywords _tag_ and _overwrite_
 
 _tag_ is responsible for providing a convenient user defined name to the run we'll be executing. In my case, I've chosen to name the run "workshop" for the entire duration of the workshop.
@@ -117,4 +119,12 @@ This is how one can use the _set_ keyword to make changes. Here it is demonstrat
 ![](Images/day2.3.PNG)
 
 
+### Running the floorplan tool
 
+Running floorplan in OpenLANE is fairly simple :- `%run_floorplan` in the docker. 
+
+In compatability with the other stages in the physical design flow, floorplan will also run as per the configuration settings preset in the design config.tcl files.
+
+Once floorplan is run, it produces a def file "picorv32a.floorplan.def", which provides us with information about core area, as well as placement of standardized cell SITES.
+
+![](Images/day2.10)
