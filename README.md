@@ -94,6 +94,12 @@ Here's a sneak peek into what your synthesis file picorv32a.synthesis.v (present
 
 # Day 2 - Understanding Floorplanning and Standard Cells
 
+The step foreshadowing the synthesis stage, is technically termed as "floorplanning". This tool works exactly how you'd manifest the thought of floorplanning on a chip would be like. It performs functions, not limited to:
+1. Determining core and die area and dimensions, 
+2. Standard cell rows for the placement of standard cells, 
+3. Placement of necessary Macros, IPs etc.
+4. Power Planning, (Although this step is not performed in OpenLANE's floorplanning, it is traditionally performed in the floorplanning stage)
+
 ### Additional Data Set-up features ###
 
 The session started off with helping us understand the significance and application of the keywords _tag_ and _overwrite_
