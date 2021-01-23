@@ -119,7 +119,7 @@ This is how one can use the _set_ keyword to make changes. Here it is demonstrat
 ![](Images/day2.3.PNG)
 
 
-### Running the floorplan tool
+### Running the floorplan tool ###
 
 Running floorplan in OpenLANE is fairly simple :- `%run_floorplan` in the docker. 
 
@@ -127,4 +127,30 @@ In compatability with the other stages in the physical design flow, floorplan wi
 
 Once floorplan is run, it produces a def file "picorv32a.floorplan.def", which provides us with information about core area, as well as placement of standardized cell SITES.
 
-![](Images/day2.10)
+![](Images/day2.10.PNG)
+
+`UNITS DISTANCE MICRONS 1000;` indicates that there exists 1000 data units in the space of 1 Micron.
+
+`DIEAREA (0 0) (1057235 806405)` indicates the placement of the die. The two coordinates described follow the `(lower_left_x, lower_left,y) (upper_right_x upper_right_y)` system.
+
+### Viewing Floorplan in Magic ###
+
+We have taken the help of the Magic VLSI tool for the purpose of viewing the results of our floorplan.
+
+For doing so, we must provide 3 main files:
+
+1. Magic Technology file (sky130A.tech)
+2. Floorplan's generated def file - picorv32a.floorplan.def
+3. Merged LEF file from the preparation stage - merged.lef (found in the <tag_name>/tmp directory)
+
+Another important point to note is that to view a certain tool's result in magic, the command must be run in the _"<tag_name>/results/<tool_name>"_ directory.
+
+![](Images/day2.7.PNG)
+
+The command to view the result in magic is as follows:-
+
+`magic -T /Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def &`
+
+This opens up Magic, and we can view the basic floorplan laid out as :-
+
+![](Images/day2.4.PNG)
