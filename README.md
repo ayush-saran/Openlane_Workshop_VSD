@@ -31,7 +31,7 @@ libs.ref - This contains the process specific files. The one we're concerned wit
 
 libs.tech - This contains files specific to the tools we'll be using for the purpose of end-to-end VLSI deisgn flow.
 
-The tools include - magic, yosys,
+The tools included are - klayout, magic, netgen, ngspice, openflow, qflow
 
 ![](Images/day1.11.PNG)
 
