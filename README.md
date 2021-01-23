@@ -38,11 +38,11 @@ The tools included are - klayout, magic, netgen, ngspice, openflow, qflow
 
 ### Calling upon OpenLANE ###
 
-The command used to run the OpenLANE flow is ./flow.tcl 
+The command used to run the OpenLANE flow is `./flow.tcl`
 
 This command is explicitly run in the docker, which should be installed along with the OpenLANE tools, pdks and other files. 
 
-To run OpenLANE interactively, ./flow.tcl -interactive does the trick.
+To run OpenLANE interactively, `./flow.tcl -interactive` , should do the trick.
 
 Furthermore, OpenLANE requires different software dependencies to run it, which is provided to it by running the command - package require openalane 0.9
 
@@ -64,7 +64,7 @@ The design heirarchy for picorv32a is listed below
 
 The Keyword "prep" is used for preparing the design so that it's ready to be used effectively by the OpenLANE tools.
 
-The command to do this is : prep -design <design_name> 
+The command to do this is : `prep -design <design_name> `
   
   In our case, design_name = picorv32a
   
@@ -82,7 +82,7 @@ During this preparation stage of OpenLANE, the two LEF files are combined and ar
 
 OpenLANE provides a very simple way to run the synthesis of the design file, (here picorv32a.v), interactively.
 
-The command to do so is run_synthesis, which takes about 2-4 minutes to run.
+The command to do so is `%run_synthesis`, which takes about 2-4 minutes to run.
 
 ![](Images/day1.3.PNG)
 
