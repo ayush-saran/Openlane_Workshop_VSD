@@ -16,6 +16,26 @@ $PDK_ROOT is the parent root directory under which we will find the Skywater PDK
 2. Open_pdks – Contains scripts that are used to bridge the gap between closed-source and open-source PDK to EDA tool compatibility
 3. Sky130A – The open-source compatible PDK files
 
+Sky130A comes with 2 sub-directories - libs.ref & libs.tech. They can be accessed as follows:-
+
+
+
+libs.ref - This contains the process specific files. The one we're concerned with is sky130_fd_sc_hd. This can be deconstructed as:-
+
+1. sky130A - Process Name
+2. fd - foundry name
+3. sc - standard cell
+4. hd - high density
+
+![](Images/day1.10.PNG)
+
+libs.tech - This contains files specific to the tools we'll be using for the purpose of end-to-end VLSI deisgn flow.
+
+The tools include - magic, yosys,
+
+![](Images/day1.11.PNG)
+
+
 ### Calling upon OpenLANE ###
 
 The command used to run the OpenLANE flow is ./flow.tcl 
