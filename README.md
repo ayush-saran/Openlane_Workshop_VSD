@@ -145,12 +145,47 @@ For doing so, we must provide 3 main files:
 
 Another important point to note is that to view a certain tool's result in magic, the command must be run in the _"<tag_name>/results/<tool_name>"_ directory.
 
-![](Images/day2.7.PNG)
-
 The command to view the result in magic is as follows:-
 
 `magic -T /Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def &`
 
+![](Images/day2.7.PNG)
+
 This opens up Magic, and we can view the basic floorplan laid out as :-
 
 ![](Images/day2.4.PNG)
+
+### Executing the PLacement ###
+
+Following Floorplan, the next step in Physical Design flow is the Placement Stage. The synthesized netlist has been mapped to standard cells and floorplanning phase has determined the standard cells rows, enabling placement.
+
+There are 2 stages to Placement as well:-
+1. Global Placement - This optimizes but isn't legal placement. It works to reduce net wirelength by reducing HPWL (Half Perimeter Wire Length). HPWL is the length + width of any area given
+2. Local Placement - This legalizes placement of cells into standard cell rows while adhering to global placement.
+
+Once again, this is done so by the following command - `%run_placement`
+
+This might take a while, as it iteratively performs it's optimizations as shown.
+
+![](Images/day2.6.PNG)
+
+The end result provides the Evaluation and Legality checks - 
+
+![](Images/day2.5.PNG)
+
+We now wish to view the results of the placement done on Magic. 
+
+The command to do so is similar to the one we used to view our floorplan, with a few changes.
+
+`magic -T /Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &` which is run in the _"<tag_name>/results/placement"_ directory.
+
+The results of the placement on Magic is as follows:- 
+
+![](Images/day2.8.PNG) 
+
+Upon zooming in, we can view the following:-
+
+![](Images/day2.9.PNG) 
+
+
+
