@@ -101,3 +101,20 @@ _tag_ is responsible for providing a convenient user defined name to the run we'
 This is implemented while preparing the design by executing this command :- `prep -design <design_name> -tag <tag_name> `
 
 Here, design_name = picorv32a & tag_name = workshop
+
+![](Images/day2.2.PNG)
+
+This reflects in the designs/picorv32a/runs folder as "workshop"
+
+![](Images/day2.1.PNG)
+
+_overwrite_ is responsible for making & saving new changes in the configuration files (config.tcl) that are customized as per the user's convenience. However, this usually cleans everything preceding it, which is why there is emphasis laid on using the _set_ keyword for making changes.
+
+`prep -design <design_name> -tag <tag_name> -overwrite` - used to overwrite new changes 
+
+This is how one can use the _set_ keyword to make changes. Here it is demonstrated on the CLOCK_PERIOD variable.
+
+![](Images/day2.3.PNG)
+
+
+
