@@ -67,3 +67,7 @@ The command to do so is run_synthesis, which takes about 2-4 minutes to run.
 ![](Images/day1.3.PNG)
 
 ![](Images/day1.4.PNG)
+
+Here's a sneak peek into what your synthesis file picorv32a.synthesis.v (present in the designs/picorv32a/runs/<date_of_run>/results/synthesis folder) should look like
+
+![](Images/day1.9.PNG)
