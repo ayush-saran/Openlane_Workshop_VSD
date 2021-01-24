@@ -244,6 +244,7 @@ These cells need to be characterized by liberty files to be used by synthesis to
 The majority of work done on this day focussed on a simple CMOS inverter predesigned in magic. We explicitly worked on the .mag file for the inverter mentioned which was available in @nickson-jose's github repository titled "vsdstdcelldesign".
 
 In the openlane_working_dir/openLANE_flow directory, clone the said repository using the command:
+
 `git clone https://github.com/nickson-jose/vsdstdcelldesign`
 
 ![](Images/day3.1.PNG)
@@ -257,12 +258,15 @@ Since we'll be operating on this file in Magic, it makes it convenient for us to
 ![](Images/day3.3.PNG)
 
 We do so by navigating to the required location which holds the sky130A.tech file and copying that to the openLANE_flow/vsdstdcelldesign directory.
+
 `cp sky130A.tech /Desktop/work/tools/openlane_working_dir/openLANE_flow/vsdstdcelldesign`
 
 Once this is done, we can navigate to the vsdstdcelldesign repo and find our tech file (sky130A.tech) file there
 ![](Images/day3.4.PNG)
 
-We can view the .mag design file (sky130A_inv.mag) in magic using the following command :- `magic -T sky130A.tech sky130A_inv.mag &`
+We can view the .mag design file (sky130A_inv.mag) in magic using the following command :-
+
+`magic -T sky130A.tech sky130A_inv.mag &`
 
 This opens up the design in magic as 
 ![](Images/day3.5.PNG)
@@ -286,3 +290,7 @@ We work on the Magic terminal for this purpose and enter the following commands,
 % ext2spice `
 
 ![](Images/day3.7.PNG)
+
+This reflects in the vsdstdcelldesign directory as well as shown:-
+![](Images/day3.8.PNG)
+
