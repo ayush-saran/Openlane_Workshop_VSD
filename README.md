@@ -324,11 +324,21 @@ Which results in the following plot as shown:-
 
 ![](Images/day3.9.PNG)
 
-This plot will be used to compute the 3 parameters which intricately define the inverter designed in question. They are:-
+### Characterization of the Cell ###
 
-1. Rise Time - This is defined as the time taken for the signal to go from 20% of it's max value to 80% of it's max value. We've defined the pulse to have a maximum magnitude of 3.3V. We find the 20% value to be 0.66V and the 80% value to be 2.64V. Experimentally it was found to be _rise_time_.
-2. Fall Time - This is the exact opposite of rise time. It's the time taken for the signal to go from 80% of it's max value to 20%. It was found to be _fall_time_
-3. Propogation Delay - This is defined as the time difference between the points where the input and output are at 50% of their magnitude.
+This plot will be used to compute the 3 parameters which intricately define the inverter designed in question, this is called characterization of the cell. They are:-
+
+1. Rise Time - This is defined as the time taken for the signal to go from 20% of it's max value to 80% of it's max value. We've defined the pulse to have a maximum magnitude of 3.3V. We find the 20% value to be 0.66V and the 80% value to be 2.64V. Experimentally it was found to be _0.04238 ns_.
+
+![](Images/day3.11.PNG)
+
+2. Fall Time - This is the exact opposite of rise time. It's the time taken for the signal to go from 80% of it's max value to 20%. It was found to be _0.0278 ns_
+
+![](Images/day3.13.PNG)
+
+3. Propogation Delay - This is defined as the time difference between the points where the input and output are at 50% of their magnitude. It's experimentally found to be _0.03357 ns_
+
+![](Images/day3.12.PNG)
 
 
 
