@@ -236,3 +236,53 @@ Standard Cell Design Flow is old fashioned, in the sense that it works in 3 sign
 3. Outputs - The Output files are typically Circuit Design Language (CDL) files, GDSII.
 
 These cells need to be characterized by liberty files to be used by synthesis tools to determine optimal circuit arrangement. This is elemental and lays the structure to the process we know as Standard Cell Characterization.
+
+
+# Day 3 - Analyzing the Standalone Standard Cell #
+
+### Cloning the design file & Moving the tech file ###
+The majority of work done on this day focussed on a simple CMOS inverter predesigned in magic. We explicitly worked on the .mag file for the inverter mentioned which was available in @nickson-jose's github repository titled "vsdstdcelldesign".
+
+In the openlane_working_dir/openLANE_flow directory, clone the said repository using the command:
+`git clone https://github.com/nickson-jose/vsdstdcelldesign`
+
+![](Images/day3.1.PNG)
+
+The .mag file we're concerned with is the sky130A_inv.mag file, which is shown here in the repo
+
+![](Images/day3.2.PNG)
+
+Since we'll be operating on this file in Magic, it makes it convenient for us to load the necessary tech file, (here sky130A.tech), which is present in the openlane_working_dir/pdks/sky130A/libs.tech/magic folder, onto the vsdstdcelldesign folder in openLANE_flow
+
+![](Images/day3.3.PNG)
+
+We do so by navigating to the required location which holds the sky130A.tech file and copying that to the openLANE_flow/vsdstdcelldesign directory.
+`cp sky130A.tech /Desktop/work/tools/openlane_working_dir/openLANE_flow/vsdstdcelldesign`
+
+Once this is done, we can navigate to the vsdstdcelldesign repo and find our tech file (sky130A.tech) file there
+![](Images/day3.4.PNG)
+
+We can view the .mag design file (sky130A_inv.mag) in magic using the following command :- `magic -T sky130A.tech sky130A_inv.mag &`
+
+This opens up the design in magic as 
+![](Images/day3.5.PNG)
+
+An important point to note here is the colour palette that is shown on the right side of the Magic tool. VLSI design is famous for multilayered approach to design, which isn't uncommom knowledge. The colour palette offers a wide variety of colours that are helpful when it comes to differentiating the different layers that certain components are a part of. Hovering over these components usually give an indication of the layer they're present on. 
+### Getting Hands on with Magic ###
+
+![](Images/day3.6.PNG) 
+
+As seen here, by merely hovering the cursor above a certain portion of the design, pressing s and entering the command `%what` in Magic's terminal, we get the description of the component of the design we're viewing.
+
+In this case, we're seen hovering above what seems to be the nmos part of the inverter design.
+
+### Extracting the Parasitic Spice File ###
+
+To extract the parasitics, we've to create an extraction file (.ext)
+
+We work on the Magic terminal for this purpose and enter the following commands, in order:-
+`% extract all
+% ext2spice cthresh 0 rthresh 0
+% ext2spice `
+
+![](Images/day3.7.PNG)
