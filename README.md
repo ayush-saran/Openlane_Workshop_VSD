@@ -286,14 +286,51 @@ To extract the parasitics, we've to create an extraction file (.ext)
 
 We work on the Magic terminal for this purpose and enter the following commands, in order:-
 
-```% extract all
-
+``` 
+% extract all
 % ext2spice cthresh 0 rthresh 0
-
-% ext2spice ```
+% ext2spice 
+```
 
 ![](Images/day3.7.PNG)
 
 This reflects in the vsdstdcelldesign directory as well as shown:-
+
 ![](Images/day3.8.PNG)
+
+### Understanding the Design further using ngspice ###
+
+Once we have the .spice file available in the directory, we can perform the necessary configurations and changes using an editor. 
+
+There are some changes we need to make in the .spice file (sky130A_inv.spice) to prepare it for further stages of the OpenLANE flow.
+They are:
+
+1. include the pshort and nshort libraries - .include ./libs/phsort.lib & .include./libs/nshort.lib
+2. pshort & nshort are replaced with pshort_model.0 and nshort_model.0 respectively.
+3. We need to define some ports which we make use of in the design - VDD, VSS, Va.
+4. Va A GND PULSE(0V 3.3V 0 0.1ns 0.1ns 2ns 4ns) - This implies a source Va, between A and GND, whose waveform is defined as a PULSE function with min value = 0V and max value = 3.3V
+5. .tran 1n 20n - transient sweep from 1ns to 20 ns
+6. .option scale=0.01u
+
+These changes together should reflect in the spice file as follows:-
+
+![](Images/day3.10.PNG)
+
+Once done, we can view the plot in ngspice by executing the command:-
+
+`% plot y vs time a`
+
+Which results in the following plot as shown:-
+
+![](Images/day3.9.PNG)
+
+This plot will be used to compute the 3 parameters which intricately define the inverter designed in question. They are:-
+
+1. Rise Time - This is defined as the time taken for the signal to go from 20% of it's max value to 80% of it's max value. We've defined the pulse to have a maximum magnitude of 3.3V. We find the 20% value to be 0.66V and the 80% value to be 2.64V. Experimentally it was found to be _rise_time_.
+2. Fall Time - This is the exact opposite of rise time. It's the time taken for the signal to go from 80% of it's max value to 20%. It was found to be _fall_time_
+3. Propogation Delay - This is defined as the time difference between the points where the input and output are at 50% of their magnitude.
+
+
+
+
 
