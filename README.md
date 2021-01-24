@@ -285,8 +285,11 @@ In this case, we're seen hovering above what seems to be the nmos part of the in
 To extract the parasitics, we've to create an extraction file (.ext)
 
 We work on the Magic terminal for this purpose and enter the following commands, in order:-
+
 `% extract all
+
 % ext2spice cthresh 0 rthresh 0
+
 % ext2spice `
 
 ![](Images/day3.7.PNG)
