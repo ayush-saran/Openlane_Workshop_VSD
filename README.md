@@ -29,6 +29,23 @@ libs.ref - This contains the process specific files. The one we're concerned wit
 
 ![](Images/day1.10.PNG)
 
+
+# Day 3 - #
+
+... till plotting
+
+rise time, fall time, propogation delay calculations
+
+Magic's DRC Engine - 
+documentation - opencircuitdesign.com/magic
+online command summary - good handbook to have
+technology files
+drc why
+cif see VIA2
+drc check
+tech load sky130A.tech
+
+
 libs.tech - This contains files specific to the tools we'll be using for the purpose of end-to-end VLSI deisgn flow.
 
 The tools included are - klayout, magic, netgen, ngspice, openflow, qflow
