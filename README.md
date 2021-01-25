@@ -341,7 +341,7 @@ This plot will be used to compute the 3 parameters which intricately define the 
 ![](Images/day3.12.PNG)
 
 
-# Day 4 - #
+# Day 4 - Pre-Layout Timing Analysis and Clock Tree Synthesis#
 
 We now enter the realm of Placement and Routing, with emphasis laid on Clock Tree Synthesis and Setup and Hold slack violations.
 
