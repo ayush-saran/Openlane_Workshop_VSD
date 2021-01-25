@@ -341,6 +341,18 @@ This plot will be used to compute the 3 parameters which intricately define the 
 ![](Images/day3.12.PNG)
 
 
+# Day 4 - #
+
+guidelines - 
+input and output should be on horiz & vertical lines
+width of std cell, odd multiples of track pitch
+height, odd multiple of vertical pitch
+
+`% grid 0.46um 0.34um 0.23um 0.17um`
+
+defining port - with image
+
+lef file
 
 
 
