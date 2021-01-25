@@ -343,6 +343,13 @@ This plot will be used to compute the 3 parameters which intricately define the 
 
 # Day 4 - #
 
+We now enter the realm of Placement and Routing, with emphasis laid on Clock Tree Synthesis and Setup and Hold slack violations.
+
+The PnR tools, make use of abstract LEF files, to perform interconnect optimised routes, in accordance with the set guidelines which have governed the industry since it's inception.
+
+Some of the guidelines are as mentioned. It is said that the input and output Ports, should be designed in such a way that they occupy odd multiples of the set track values, presented in the LEF files.
+
+
 guidelines - 
 input and output should be on horiz & vertical lines
 width of std cell, odd multiples of track pitch
@@ -354,5 +361,17 @@ defining port - with image
 
 lef file
 
+library fast.lib slow.lib typical.lib
+
+SYNTH_SIZING, BUFFERING, DRIVING_CELL, STRATEGY - description
+
+upsizing buffer
+
+
+tns -2593.43
+wns -17.96   
+
+tns - 7.71
+wns - 1.16
 
 
