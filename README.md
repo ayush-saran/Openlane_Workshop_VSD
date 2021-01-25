@@ -347,25 +347,115 @@ We now enter the realm of Placement and Routing, with emphasis laid on Clock Tre
 
 The PnR tools, make use of abstract LEF files, to perform interconnect optimised routes, in accordance with the set guidelines which have governed the industry since it's inception.
 
-Some of the guidelines are as mentioned. It is said that the input and output Ports, should be designed in such a way that they occupy odd multiples of the set track values, presented in the LEF files.
+Some of the guidelines are as mentioned. It is said that the input and output Ports, should be designed in such a way that they occupy odd multiples of the set track values, presented in the LEF files. As shown in the image below, this tabular representation indicates the x and y offsets and pitch defined for each layer of the design. The Offset is exactly half the pitch, which indicates the tracks are centred about the origin.
 
+![](Images/day4.1.PNG)
 
-guidelines - 
-input and output should be on horiz & vertical lines
-width of std cell, odd multiples of track pitch
-height, odd multiple of vertical pitch
+This can be adhered to on the magic terminal itself by writing the following command:-
 
 `% grid 0.46um 0.34um 0.23um 0.17um`
 
-defining port - with image
+Up next, we demonstrate how to define a PORT in magic. These ports can be Input/Output/VDD/GND depending upon the nature of the component and design. We use the GUI offered by Magic to do this. Upon clicing `Edit->Text`, One can find an interface open up which allows for enabling of a certain part of the design to become a port, whose number is customized by the user themselves.
 
-lef file
+![](Images/day4.2.PNG)
 
-library fast.lib slow.lib typical.lib
+The ports are defined on the terminal as follows :-
 
-SYNTH_SIZING, BUFFERING, DRIVING_CELL, STRATEGY - description
+```
+% port class inout 
+% port use power // for VPWR
 
-upsizing buffer
+% port class input
+% port use signal // for A
+
+% port class output
+% port use signal // for Y
+
+% port class inout
+% port use ground // for VGND
+```
+
+### LEF Generation in Magic ###
+
+Magic, the tool, allows for users to create their Cell LEF files from the comfort of it's own terminal itself. This is done simply by executing the command `lef write` in the terminal. This returns a scale value of 0.01.
+
+One can exit Magic now and view the .lef file in the directory concerned using any editor. This shows the initialization of the pins as ports as defined by the user before-hand. 
+
+![](Images/day4.3.PNG)
+
+### Including Standalone Standardized Cells into OpenLANE ###
+We now look to inculcate the standard cell (inverter) we'd worked on previously into the picorv32a design we're working on. 
+
+To do so, we open the config.tcl file and make a few changes:
+1. Add a few libraries and link them to their respective directories, significance of which will become clearer in further steps.
+2. Adding a line to integrate the .lef files we've generated for the custom cell. 
+
+Here's how the config.tcl file looks finally :-
+
+![](Images/day4.4.PNG)
+
+The 3 libraries we're concerned with are listed below :-
+1. fast.lib
+2. slow.lib
+3. typical.lib
+
+Next, we need to prepare the design again in OpenLANE, following the standard steps of `./flow.tcl -interactive` -> `package require openlane 0.9`.
+
+Once done, run `prep -design <design_name> -tag <tag_name> -overwrite`
+
+"-overwrite" is significant as it overwrites the new changes made in the configuration files.
+
+After the design is prepared, we run the following commands to include the additional lef files in the flow:
+
+```
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+  
+add_lefs -src $lefs
+```
+
+You can now open up the design on magic and you'll be able to find the sky130_vsdinv inverter upon zooming into the big picture, as shown :-
+
+![](Images/day4.6.PNG)
+![](Images/day4.5.PNG)
+
+
+
+### Fixing Slack Violations ###
+
+Upon running synthesis, it is seen that the setup and hold slacks are both in the negative spectrum. This indicates a VIOLATION! 
+
+This is to be resolved before moving onto the next step. 
+
+We run the "sta" open source tool to get a better understanding of the situation. 
+
+Running `sta sta.conf` gives a table of data that communicates the necessary information regarding the delays and skews respectively for various pins. It also provides information about the fanout at each terminal, and upon executing `report_net -connections <net_number>` one can get a clearer idea about what other connections that net has.
+
+#### Upsizing the Buffers ####
+
+As shown, below, net number _12662_ is run by sky130_fd_sc_hc__buf1 when it actually branches out to 4 different pins, which is one reason we recognize this could be a location we can modify to improve the slack. 
+![](Images/day4.8.PNG)
+
+This modification can be done as follows:- `replace_cell _<net_number>_ <name_of_buffer>` which implies the usage of a better buffer system to better handle the fanout and capacitance at that point.
+
+Furthermore, the command `report_checks -fields {net cap slew input_pins} -digits 4` can be executed to view the table after the changes are made.
+This process is known as upsizing the buffer, which helps in reducing the slack violation.
+
+Furthermore, one can modify the env-based variables such as SYNTH_SIZING, SYNTH_BUFFERING, SYNTH_STRATEGY, by initializing them to "1" and making sure SYNTH_DRIVING_CELL to sky130_fd_sc_hc__inv_8, which is powerful.
+
+`set ::env(<VARIABLE_NAME>) <DESIRED_VALUE>` should do the trick. 
+
+### Clock Tree Synthesis ###
+
+To run Clock Tress Synthesis in OpenLANE :- `% run_cts`
+
+OpenLANE intrinsically will add the necessary buffers required to make sure the timing rules are adhered to which will modify our pre-existing netlist. This will reflect in the synthesis folder as another file by the name "picorv32a.synthesis_cts.v" along with the traditional "picorv32a.synthesis.v" in the `/designs/picorv32a/runs/<tag_name>/results/synthesis` directory. 
+
+
+Note that CTS is run only once synthesis->floorplan->placement has been performed.
+
+OpenLANE will then produce a new .def file after the CTS is performed which can be used to be viewed in Magic, post CTS. The results are shown:-
+
+![](Images/day4.11.PNG)
 
 
 tns -2593.43
