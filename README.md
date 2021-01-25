@@ -457,6 +457,27 @@ OpenLANE will then produce a new .def file after the CTS is performed which can 
 
 ![](Images/day4.11.PNG)
 
+### Using OpenROAD ###
+
+In OpenROAD the timing analysis is done by creating a .db database file. This database file is created from the post-cts LEF and DEF files. We've to keep updating the .db files as the DEF files keep changing
+
+Upon invoking OpenROAD as `% openroad` , execute the following commands for further timing analysis:-
+
+```
+% write_db pico_cts.db
+% read_db pico_cts.db
+% read_lef <Location_of_LEF_file> //Location of LEF file - /designs/picorv32a/runs/<tag_name>/tmp/merged.lef
+% read_def <Location_of_DEF_file> //Location of DEF file - /designs/picorv32a/runs/<tag_name>/results/cts/picorv23a.cts.def
+% read_verilog <Location_of_verilog_file> //Verilog file - /designs/picorv32a/runs/<tag_name>/results/synthesis/picorv32a.synthesis_cts.v
+% read_liberty $::env(LIB_SYNTH_COMPLETE)
+% link_design <design_name> //design name = picorv32a
+% read_sdc <Location_of_sdc_file> //sdc file - /designs/picorv32a/runs/<tag_name>/src/my_base.sdc
+% set_propagated_clock [all_clocks]
+% report_checks -path_delay min_max -fields {slew trans net cap input_pin} -format full_clock_expanded -digits 4
+
+```
+
+
 
 tns -2593.43
 wns -17.96   
