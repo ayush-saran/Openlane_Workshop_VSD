@@ -30,22 +30,6 @@ libs.ref - This contains the process specific files. The one we're concerned wit
 ![](Images/day1.10.PNG)
 
 
-# Day 3 - #
-
-... till plotting
-
-rise time, fall time, propogation delay calculations
-
-Magic's DRC Engine - 
-documentation - opencircuitdesign.com/magic
-online command summary - good handbook to have
-technology files
-drc why
-cif see VIA2
-drc check
-tech load sky130A.tech
-
-
 libs.tech - This contains files specific to the tools we'll be using for the purpose of end-to-end VLSI deisgn flow.
 
 The tools included are - klayout, magic, netgen, ngspice, openflow, qflow
@@ -485,20 +469,97 @@ wns -17.96
 tns - 7.71
 wns - 1.16
 
-# Day 5 - #
+# Day 5 - Final Steps for RTL2GDS using TritonRoute and OpenSTA #
 
-1. CURRENT_DEF
-2. Power distribution - part of floorplan but adjustments in OpenLANE, hence after cts
-3. begin power dsitribution - `% gen_pdn`
-4. Stdcell rails
-5. Power to the chip from vdd and gnd pads
-6. Power goes through tracks
-7. Routing strategies - 0 1 2 3 14
-8. TritonRoute - 0 to 3, engine 3, 14 - TritonRoute14
-compromise on one aspect, gain on memory req, run time etc.
-TritonRoute14 - 0 violations, memory high, runtime high
-9. SPEF generation
+#### Understanding which part of the flow you're presently in ####
+One of the biggest confusions out there is figuring out which part of the OpenLANE flow they're presently in. Each stage of the flow works in such a way that files generated from preceding tools/parts of the flow are then used by successive stages, which cumulatively make the entire VLSI Physical Design flow. 
 
-antenna diodes get inserted, hence new .v files in synthesis folder
+To understand which part of the flow you're presently in, we need to understand what file is stored in the variable CURRENT_DEF. This is the variable which returns the latest def file which has been run. It can be accessed as follows in OpenLANE as :-
 
+` % echo $::env(CURRENT_DEF)`
+
+After Day 4's work, we see that CURRENT_DEF holds the def file we get after performing the cts stage as can be seen here:-
+
+![](Images/day5.1.PNG)
+
+### Power Distribution Network Stage ###
+
+Traditionally, the floorplan stage is when the Power Distribution Network is laid out as well. However, the current versions of OpenLANE doesn't perform it in the floorplan stage, but it is advisable to do it after the Clock Tree Synthesis stage. OpenLANE has a simple command to do so :-
+
+` % gen_pdn`
+
+As this command runs, we see the following information:
+
+![](Images/day5.2.PNG)
+
+It's observed that the DEF File being read is the picorv32a.cts.def file, which was generated after the CTS stage.
+
+We also get an idea about the information regarding Stdcell Rails and Straps. The Standard cell we worked with was the simple inverter which we integrated into the picorv32a design, and we had set the dimensions to be _2.72_, the reason of which is explained in the image above. The Standard Cell pitch is defined as 2.72 which indicates that any standard cell is required to fit into multiples of this dimension itself. 
+
+![](Images/day5.3.PNG) 
+
+This image, courtesy of Nickson's tutorial explanation about the Power distribution network, concisely shows how the power is actually distributed to the entire chip. 
+
+Here, the green portion represents the design, i.e, picorv32a, the red and blue streaks represent the VCC and GND aspects respectively. As seen, the power and ground parts of the circuit are tapped from their respective ports and vertically distribute themselves to all the necessary points of the design. The Horizontal straps are set aside for the standard cells that we integrate in the design. This is a high level understanding of the power distribution network. 
+
+### Routing Strategies ###
+
+Once the PDN is run and executed, CURRENT_DEF now holds the pdn.def file. We now approach the last and final stage of the flow - Routing.
+
+We make use of TritonRoute for the purpose of routing. It offers us with multiple routing strategies which have their own pros and cons. The two main strategies adopted are "0" and "14" (also called TritonRoute14).
+
+For the purpose of this workshop, we make use of Routing Strategy 0. One can understand which strategy is put into place by executing `% echo $::env(ROUTING_STRATEGY)` in OpenLANE. By default, OpenLANE executes strategy 0.
+
+![](Images/day5.4.PNG)
+
+This image shows the strategy is set to 0 and to execute routing, run the command `% run_routing`.
+
+The Pros of using Strategy 0 is that it's very concise. The run time is significantly better than that of 14, that coupled with the fact that the memory requirement for Startegy 0 is optimally better than that of 14. However, that being said, Strategy 14 is the more powerful one. Once we executed the routing phase using 0, we started off with 11k+ violations, but reduced it down to 3. This was later manually rectified. Strategy 14 on the other hand, converges the stage completely with absolutely no DRC errors/violations. 
+
+There are multiple iterations that take place in the routing process, each iteration working towards removing the multiple violations that pre-exist in designs. The learning rate with each iteration decreases significantly, as one might expect. The first few iterations remove almost 100x the number of violations as compared to the tail end of iterations performed. 
+
+Here is a small snippet of one particular iteration :
+
+![](Images/day5.6.PNG)
+
+This informs us of the time taken for said iteration, memory requirement and number of violations solved.
+
+Routing now comes to an end
+
+![](Images/day5.5.PNG)
+
+### SPEF Extraction ###
+
+Once the routing is completed, the interconnect parasitics are extracted to perform sign off Post-STA analysis. These parasitics are extracted into a SPEF file. 
+
+An Important point to note is that SPEF EXTRACTOR is yet to be integrated in the present versions of OpenLANE. 
+
+The SPEF EXTRACTOR tools has been made available in the `/home/<user_name>/Desktop/work/tools` directory. Once we're in the directory, we're to execute the python file main.py by passing 2 main arguments:
+
+1. Merged LEF file - `/designs/picorv32a/runs/<tag_name>/tmp/merged.lef`
+2. DEF file (after routing) - `/designs/picorv32a/runs/<tag_name>/results/routing/picorv32a.def`
+
+the final command executed is:- 
+
+`python3 main.py /designs/picorv32a/runs/<tag_name>/tmp/merged.lef /designs/picorv32a/runs/<tag_name>/results/routing/picorv32a.def`
+
+![](Images/day5.7.PNG) 
+
+The SPEF file is then written into the routing directory under <tag_name>/results as can be seen here:- 
+
+![](Images/day5.8.PNG)
+
+### Modified Netlists ### 
+
+At certain stages, the original netlist we worked with has been modified and added subsequently to the synthesis folder under results because each stage is responsible for performing certain actions that can optimise the design and keep the physcial design flow smooth and running. 
+
+![](Images/day5.9.PNG)
+
+We start with picorv32a.synthesis.v after running the synthesis tool, 
+
+We then get picorv32a.synthesis_cts.v after running the clock tree synthesis, because this stage adds more buffers and upsizing of buffers was elemental in maintaing a positive slack.
+
+Furthermore, the last two files are executed prior to the routing stages, where they add antenna diodes to optimise the design accordingly. 
+
+This goes to show the modification of the netlists at every important stage of the flow. 
 
