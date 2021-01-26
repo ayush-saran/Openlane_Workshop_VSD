@@ -485,4 +485,20 @@ wns -17.96
 tns - 7.71
 wns - 1.16
 
+# Day 5 - #
+
+1. CURRENT_DEF
+2. Power distribution - part of floorplan but adjustments in OpenLANE, hence after cts
+3. begin power dsitribution - `% gen_pdn`
+4. Stdcell rails
+5. Power to the chip from vdd and gnd pads
+6. Power goes through tracks
+7. Routing strategies - 0 1 2 3 14
+8. TritonRoute - 0 to 3, engine 3, 14 - TritonRoute14
+compromise on one aspect, gain on memory req, run time etc.
+TritonRoute14 - 0 violations, memory high, runtime high
+9. SPEF generation
+
+antenna diodes get inserted, hence new .v files in synthesis folder
+
 
