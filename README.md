@@ -419,14 +419,29 @@ Running `sta sta.conf` gives a table of data that communicates the necessary inf
 As shown, below, net number _12662_ is run by sky130_fd_sc_hc__buf1 when it actually branches out to 4 different pins, which is one reason we recognize this could be a location we can modify to improve the slack. 
 ![](Images/day4.8.PNG)
 
+It is observed that the large fanout for many nets leads to an increased value of capacitance, coupled with the fact that many of these nets ave been assigned buffers that aren't powerful enough to cater to the needs of all the components it fans out to. This is leading to unprecedented values of both HOLD and SETUP slack violations. The most commonly assigned buffer seems to be "sky130_fd_sc_hd__buf1", which when for selective nets has been changed to either "sky130_fd_sc_hd__buf4" or "sky130_fd_sc_hc__buf8" has solved a good chunk of the slack violation, previously prominent. Granted, it's not going to 100% solve the issue, but it's a step forward in the right direction. 
+
+To give some perspective, changing just one specific net from buf1 -> buf4 improved my setup slack from -5.56 to -1.15. The key is to identiy those nets which are privy to high fanouts and susceptible to high capacitance values, and targetting them appropriately. 
+
 This modification can be done as follows:- `replace_cell _<net_number>_ <name_of_buffer>` which implies the usage of a better buffer system to better handle the fanout and capacitance at that point.
 
 Furthermore, the command `report_checks -fields {net cap slew input_pins} -digits 4` can be executed to view the table after the changes are made.
 This process is known as upsizing the buffer, which helps in reducing the slack violation.
 
-Furthermore, one can modify the env-based variables such as SYNTH_SIZING, SYNTH_BUFFERING, SYNTH_STRATEGY, by initializing them to "1" and making sure SYNTH_DRIVING_CELL to sky130_fd_sc_hc__inv_8, which is powerful.
+One can modify the env-based variables such as SYNTH_SIZING, SYNTH_BUFFERING, SYNTH_STRATEGY, by initializing them to "1" and updating SYNTH_DRIVING_CELL to sky130_fd_sc_hc__inv_8, which is powerful.
 
 `set ::env(<VARIABLE_NAME>) <DESIRED_VALUE>` should do the trick. 
+
+Here is the comparison of the tns and wns values before and after the optimizing processes are completed. As observed, one can see significant improvement in the two values after a few modifications and cutsomizations.
+
+TNS - Total Negative slack, as the name suggests, is the addition of all the negative slack that persists in the design.
+WNS - Worst-case Negative Slack, is defined as the slack present on the worst/critical path. 
+
+Before - 
+tns -2593.43 wns -17.96   
+
+After - 
+tns -7.71 wns -1.16
 
 ### Clock Tree Synthesis ###
 
@@ -462,12 +477,6 @@ Upon invoking OpenROAD as `% openroad` , execute the following commands for furt
 ```
 
 
-
-tns -2593.43
-wns -17.96   
-
-tns - 7.71
-wns - 1.16
 
 # Day 5 - Final Steps for RTL2GDS using TritonRoute and OpenSTA #
 
@@ -514,7 +523,7 @@ For the purpose of this workshop, we make use of Routing Strategy 0. One can und
 
 This image shows the strategy is set to 0 and to execute routing, run the command `% run_routing`.
 
-The Pros of using Strategy 0 is that it's very concise. The run time is significantly better than that of 14, that coupled with the fact that the memory requirement for Startegy 0 is optimally better than that of 14. However, that being said, Strategy 14 is the more powerful one. Once we executed the routing phase using 0, we started off with 11k+ violations, but reduced it down to 3. This was later manually rectified. Strategy 14 on the other hand, converges the stage completely with absolutely no DRC errors/violations. 
+The Pros of using Strategy 0 is that it's very concise. The run time is significantly better than that of 14, that coupled with the fact that the memory requirement for Startegy 0 is optimally better than that of 14. However, that being said, Strategy 14 is the more powerful one. Once we executed the routing phase using 0, we started off with 11k+ violations, but reduced it down to 3. This was later manually rectified. Strategy 14 on the other hand, converges the design completely with absolutely no DRC errors/violations. 
 
 There are multiple iterations that take place in the routing process, each iteration working towards removing the multiple violations that pre-exist in designs. The learning rate with each iteration decreases significantly, as one might expect. The first few iterations remove almost 100x the number of violations as compared to the tail end of iterations performed. 
 
@@ -563,3 +572,14 @@ Furthermore, the last two files are executed prior to the routing stages, where 
 
 This goes to show the modification of the netlists at every important stage of the flow. 
 
+
+
+# Contact #
+
+I hope this repository will be of productive use to someone out there, exploring open source VLSI. I'm open to engaging in discussions/doubts regarding the same and am available to be contacted on the given email id. Feel free to reach out! 
+
+Ayush Saran - ayush.72726@gmail.com
+
+# Acknowledgements #
+
+The workshop would've been a harder mountain to climb had it not been for the efforts of VSD and more in particular, [Mr. Nickson Jose](https://github.com/nickson-jose) and [Mr. Kunal Ghosh](https://github.com/kunalg123). Nickson's hands on explanation of the labs, a step by step approach and emphasis on understanding the flow of commands and the purpose each small change makes in the entire project was really helpful. That, coupled with Kunal's theoretical videos and his discipline to maintain videos at optimal durations to reduce monotocity was the perfect combination for any enthusiastic learner. 
