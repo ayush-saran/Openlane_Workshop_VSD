@@ -570,6 +570,12 @@ This image, courtesy of Nickson's tutorial explanation about the Power distribut
 
 Here, the green portion represents the design, i.e, picorv32a, the red and blue streaks represent the VCC and GND aspects respectively. As seen, the power and ground parts of the circuit are tapped from their respective ports and vertically distribute themselves to all the necessary points of the design. The Horizontal straps are set aside for the standard cells that we integrate in the design. This is a high level understanding of the power distribution network. 
 
+### Routing in OpenLANE ###
+
+OpenLANE employs TritonRoute routing engine for the purpose of both Global and Detailed Routing.
+
+Often done to handle high complexity, Routing engines perform routing in 2 stages, starting with Global Routing followed by Detailed Routing. Globally speaking, the engine works towards partitioning the region in multiple tiles and determining the tile-to-tile path for the nets. Detailed routing then takes place which determines the exact tracks and vias that will be employed by individual nets that define the routing of the design. 
+
 ### Routing Strategies ###
 
 Once the PDN is run and executed, CURRENT_DEF now holds the pdn.def file. We now approach the last and final stage of the flow - Routing.
