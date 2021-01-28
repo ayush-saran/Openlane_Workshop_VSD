@@ -18,7 +18,7 @@ Adding on, I would suggest anyone interested to go through these 2 courses, whic
 
 ASIC (Application Specific Integrated Circuit) Design Flow is a dynamic process, which takes action through multiple stages. The flow is deconstructed into 11 different stages which are connected, and follow the heirarchy as shown in the figure below :- 
 
-![](Images/day0.1)
+![](Images/day0.1.png)
 
 1. Chip Specification - VLSI engineers are provided with the "specs" that constrain their design for a certain system. These constraints, majorly physcial are elemental in determining the specifications.
 
