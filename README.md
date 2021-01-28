@@ -306,6 +306,15 @@ This opens up the design in magic as
 ![](Images/day3.5.PNG)
 
 An important point to note here is the colour palette that is shown on the right side of the Magic tool. VLSI design is famous for multilayered approach to design, which isn't uncommom knowledge. The colour palette offers a wide variety of colours that are helpful when it comes to differentiating the different layers that certain components are a part of. Hovering over these components usually give an indication of the layer they're present on. 
+
+### DRC Errors ###
+
+Magic's GUI allows for us to view DRC errors which might persist in the netlist viewed. As seen in the image above, it provides a numerical value to DRC which indicates the level of error that exist. A DRC=0 indicates a clean design, but anything over 0, is marked red indicating violations in area/design etc. Instead of iteratively doing DRC Checks after the layout process, the designer can make use of Magic's dynamic and continuous DRC checks to make sure the design is DRC free during creation of the design/netlist. 
+
+The GUI offers an option under the DRC drop-down menu which when selected details the DRC error present in the design on the terminal. 
+
+A better understanding of using DRC with magic can be found by going through the documentation present on opencircuitdesign's website [here](http://opencircuitdesign.com/magic/)
+
 ### Getting Hands on with Magic ###
 
 ![](Images/day3.6.PNG) 
