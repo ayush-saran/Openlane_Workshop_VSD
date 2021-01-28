@@ -1,6 +1,46 @@
 # Openlane_Workshop_VSD
 This repository will reflect the work done in the Advanced Physical Design Flow workshop, offered by the folks at VSD. It's a 5 day workshop that aims to educate us on the intricacies of Open Source EDA tools and PDKs as used by industry leaders. Furthermore, it uses Openlane flow to help understand the flow of work when it comes to VLSI designs, starting from the RTL level to the GSDII stage, performing the synthesis, placement, floorplanning, routing and sta required to do so.
 
+# Taking the First Steps # 
+
+The beauty of open-source is that it's freely avaialable to everyone. OpenLANE is open-sourced as well, bringing us one step closer to using industry grade vlsi tools. To get OpenLANE up and running locally on your systems, it's essential to keep in mind 2 things:-
+
+1. Ubuntu OS
+2. 40GB+ Disk Space. (If you're comfortable with Virtual Box, you can make use of Partition GUIs to allocate the necessary memory)
+
+Adding on, I would suggest anyone interested to go through these 2 courses, which were extremely helpful in guiding me through the entire installation and testing process. Both courses are freely avaialable on Udemy, offered by VSD.
+
+[A complete guide to install OpenLANE and Sky130nm PDK](https://www.udemy.com/share/103wqAAEESeVZUR3QF/)
+
+[A complete guide to install open-source EDA tools](https://www.udemy.com/share/101skKAEESeVZUR3QF/)
+
+# Understanding the Flow #
+
+ASIC (Application Specific Integrated Circuit) Design Flow is a dynamic process, which takes action through multiple stages. The flow is deconstructed into 11 different stages which are connected, and follow the heirarchy as shown in the figure below :- 
+
+![](Images/day0.1)
+
+1. Chip Specification - VLSI engineers are provided with the "specs" that constrain their design for a certain system. These constraints, majorly physcial are elemental in determining the specifications.
+
+2. Design Entry/Functional Verification - This stage is associated with RTL design and Behavioral Modeling that are performed by means of a Hardware Description Language (HDLs - Verilog, VHDL). These are the 2 main methods made use of when creating the HDL of a microarchitecture.
+
+3. RTL synthesis - At this stage, an abstract specification of the desired behaviour is turned into a design implementation, represented by logic gates, typically performed by a synthesis tool. The HDL netlist is tech-mapped to the specific logic gates that give the design structure and shape. OpenLANE uses an Open-Source tool "yosys" to do so. 
+
+4. Partitioning of Chip - Done in the RTL stage, this is responsible for demarcating certain sections of the chip and designing each sub-section.
+
+5. DFT Insertion - DFT (Design for test) Circuit inserted.
+
+6. Floorplanning - Responsible for not only planning the silicon core/die area according to the design, but is also tasked with it's ability to generate a Power Distribution Network throughout the chip, which is provided/tapped to each individual component of the synthesized netlist. Traditionally, PDN is performed in this stage, but the latest versions of OpenLANE don't include it in this tool. 
+
+7. Placement Stage - This is responsible for the placement of the standard cells along the set rows and tracks, aligning itself with sites defined in the LEF files generated after synthesis. Split into 2 stages itself : i) Global and ii) Local Placement respectively which compound on each other to provide us with a more concrete structure to our design. 
+
+8. Clock Tree Synthesis - This stage works towards building a clock distribution network that is tasked with delivering the clock to all associated sequential elements of the design. Optimization of the slack values is eminent to this stage. 
+
+9. Routing - Performed after the CTS and PDN stages, it implements the interconnect system between standard cells in the design/netlist, and works towards minimizing DRC errors. 
+
+10. Final Verification - Once the entire flow is setup, we perform one final verification to make sure there are no violations present that pose a problem to the chip.
+
+11. GDSII - Graphic Design System, is a document that enlists the layout design of the chip in question, and is the file that is often talked about when the topic of IPs come up. It comes in the binary format, which is readable by specific EDA tools. 
 
 # Day 1 - An Introduction to OpenLANE
 
@@ -325,7 +365,7 @@ This plot will be used to compute the 3 parameters which intricately define the 
 ![](Images/day3.12.PNG)
 
 
-# Day 4 - Pre-Layout Timing Analysis and Clock Tree Synthesis#
+# Day 4 - Pre-Layout Timing Analysis and Clock Tree Synthesis #
 
 We now enter the realm of Placement and Routing, with emphasis laid on Clock Tree Synthesis and Setup and Hold slack violations.
 
