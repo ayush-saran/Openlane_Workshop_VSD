@@ -42,6 +42,16 @@ ASIC (Application Specific Integrated Circuit) Design Flow is a dynamic process,
 
 11. GDSII - Graphic Design System, is a document that enlists the layout design of the chip in question, and is the file that is often talked about when the topic of IPs come up. It comes in the binary format, which is readable by specific EDA tools. 
 
+# The OpenLANE flow #
+
+![](Images/day0.2.png)
+
+Given above is the diagram that best describes the flow of work that takes place in OpenLANE. 
+
+Provided to OpenLANE are 2 main inputs, the design file (.v format) and the PDK (labelled "SW PDK"), which in our case is the Skywater 130A PDK.
+
+The design file goes through a synthesis stage employing the tools, yosys and abc. STA is performed at the closure of each sub stage to make sure there are no timing violations that pile up towards the end. This stage is followed by the entry of OpenROAD which takes care of Floorplanning, Placement, CTS & PDN. We then proceed to fix any slack violations that may be present in the design, one method to do so being the insertion of Ant. Diodes and Upsizing the necessary buffers to optimise the fanout and net-capacitance. Once done, we shift our focus to Routing, which is the final step in this flow, performed by TritonRoute. The tail end of the flow focusses on the finishing touches, i.e, extracting SPEF Files, physical verification and finally generating the GDSii file. 
+
 # Day 1 - An Introduction to OpenLANE
 
 Day 1 kickstarted off with educating us about "chips". Most of us have played around with an Arduino, as electronics enthusiasts and hobbyists, but we've only toyed around with the functionalities of the Arudino, not the brain of the processor itself. The very first lecture of this workshop opened our eyes to what exactly lies in front of us if we choose to this "VLSI" career road, a road that in recent times has been travelled by many. 
