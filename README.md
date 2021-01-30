@@ -3,7 +3,7 @@ This repository will reflect the work done in the Advanced Physical Design Flow 
 
 # Taking the First Steps # 
 
-The beauty of open-source is that it's freely avaialable to everyone. OpenLANE is open-sourced as well, bringing us one step closer to using industry grade vlsi tools. To get OpenLANE up and running locally on your systems, it's essential to keep in mind 2 things:-
+The beauty of open-source is that it's freely avaialable to everyone. OpenLANE is open-sourced as well, bringing us one step closer to using industry grade vlsi tools. To get OpenLANE up and running locally on your systems, it's essential to keep in mind these 2 prerequisites:-
 
 1. Ubuntu OS
 2. 40GB+ Disk Space. (If you're comfortable with Virtual Box, you can make use of Partition GUIs to allocate the necessary memory)
